@@ -1,0 +1,37 @@
+<html>
+    <head>
+        <title>webSocket学习</title>
+        <script>
+            var websocket = new WebSocket("ws://www.host.com/path");
+            websocket.onopen = function (evt) {
+                onOpen(evt)
+            };
+            websocket.onclose = function (evt) {
+                onClose(evt)
+            };
+            websocket.onmessage = function (evt) {
+                onMessage(evt)
+            };
+            websocket.onerror = function (evt) {
+                onError(evt)
+            };
+
+
+            function onMessage(evt) {
+                alert(evt.data);
+            }
+
+            function onError(evt) {
+                alert(evt.data);
+            }
+
+            websocket.send("client to server");
+
+        </script>
+    </head>
+
+    <body>
+
+    </body>
+
+</html>

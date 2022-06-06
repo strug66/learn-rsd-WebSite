@@ -1,0 +1,53 @@
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+        <title>正则验证</title>
+    </head>
+    <script>
+        function onMatch() {
+            // var myForm = document.getElementById("myForm");
+            // var formData = new FormData(myForm);
+            // formData.append("sex","男");
+            var str = document.getElementById("str");
+            var reg = document.getElementById("reg");
+            var result = document.getElementById("result");
+            var iArray = null;
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    var data = xhr.responseText;
+                    iArray = JSON.parse(data);
+                }
+
+
+            };
+            xhr.open("post", "/tool/regex", false);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded;charset=UTF-8');
+            xhr.send("str=" + str.value + "&reg=" + reg.value);
+
+            var str = "共找到" + iArray.length + "处匹配" + "\n";
+
+            iArray.forEach(function (obj, index) {
+                str += obj.group + "\n";
+            });
+
+            result.value = str;
+        }
+
+    </script>
+    <body>
+        <form id="myForm">
+            <div>
+                <textarea cols="60" rows="6" id="str" name="str"></textarea>
+            </div>
+            <div>
+                <span>正则表达式</span>
+                <input id="reg" name="reg"/>
+                <input style="background-color: cornflowerblue" type="button" value="测试匹配" onclick="onMatch()"/>
+            </div>
+            <div>
+                <textarea cols="60" rows="6" id="result"></textarea>
+            </div>
+        </form>
+    </body>
+</html>

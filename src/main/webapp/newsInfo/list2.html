@@ -1,0 +1,86 @@
+<html>
+    <head>
+        <title>新闻列表</title>
+        <script>
+            function getTime(time) {
+                var d = new Date(time);
+                return d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate() + " " + d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
+            }
+
+            function toUpdatePage(id) {
+                window.location.href = "/newsInfo/update.html?id=" + id;
+            }
+
+            function deDelete(id) {
+                if (confirm("您确定删除吗？")) {
+                    var xhr = new XMLHttpRequest();
+                    xhr.onreadystatechange = function () {
+                        if (xhr.readyState == 4 && xhr.status == 200) {
+                            var data = xhr.responseText;
+                            if (data == "true") {
+                                alert("删除成功！");
+                                window.location.href = "/newsInfo/list2.html";
+                            } else {
+                                alert("删除失败！");
+                            }
+                        }
+                    }
+                    xhr.open("get", "/newsInfo/doDelete?id=" + id, true);
+                    xhr.send();
+                }
+
+            }
+
+            function load() {
+                var iArray;
+                var xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState == 4 && xhr.status == 200) {
+                        var data = xhr.responseText;
+                        iArray = JSON.parse(data);
+                    }
+                };
+                xhr.open("get", "/newsInfo/list", false);
+                xhr.send();
+
+                var str = "<table border='1' width='100%'>";
+
+                str += "<tr>";
+                str += "<td>序号</td>"
+                str += "<td>标题</td>"
+                str += "<td>新闻类型</td>"
+                str += "<td>简短描述</td>"
+                str += "<td>新闻内容</td>"
+                str += "<td>显示时间</td>"
+                str += "<td>发布人</td>"
+                str += "<td>创建时间</td>"
+                str += "<td>修改时间</td>"
+                str += "<td>操作</td>"
+                str += "</tr>";
+
+                iArray.forEach(function (obj, index) {
+                    str += "<tr>";
+                    str += "<td>" + (obj.id) + "</td>"
+                    str += "<td>" + obj.title + "</td>"
+                    str += "<td>" + obj.typeId + "</td>"
+                    str += "<td>" + obj.shortDesc + "</td>"
+                    str += "<td>" + obj.content + "</td>"
+                    str += "<td>" + obj.showTime + "</td>"
+                    str += "<td>" + obj.pubUserId + "</td>"
+                    str += "<td>" + getTime(obj.createTime) + "</td>"
+                    str += "<td>" + getTime(obj.updateTime) + "</td>"
+                    str += "<td><a href='javaScript:toUpdatePage(" + obj.id + ")'>修改</a><a href='javaScript:deDelete(" + obj.id + ")'>删除</a></td>";
+                    str += "</tr>";
+                });
+                str += "</table>";
+
+                document.getElementById("showInfo").innerHTML = str;
+            }
+        </script>
+    </head>
+    <body onload="load()">
+        <h2>新闻列表</h2>
+        <a href="add.html">新增</a>
+        <div id="showInfo"></div>
+    </body>
+</html>

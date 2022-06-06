@@ -1,0 +1,86 @@
+<html>
+    <head>
+        <title>添加新闻</title>
+        <script type="text/javascript">
+            function add() {
+                var title = document.getElementById("title");
+                var typeId = document.getElementById("typeId");
+                var pubUserId = document.getElementById("pubUserId");
+                if (title.value == "") {
+                    alert("标题不能为空！");
+                    return;
+                }
+                var reg1 = /^\d*$/.test(typeId.value);
+                if (!reg1) {
+                    alert("新闻类型必须为数字！");
+                    return;
+                }
+                var reg2 = /^\d+$/.test(pubUserId.value);
+                if (!reg2) {
+                    alert("发布人必须为数字！");
+                    return;
+                }
+
+                var myForm = document.getElementById("myForm");
+                var formData = new FormData(myForm);
+
+                var xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState == 4 && xhr.status == 200) {
+                        var data = xhr.responseText;
+                        if (data == "true") {
+                            alert("新增成功！");
+                            window.location.href = "/newsInfo/list2.html";
+                        } else {
+                            alert("新增失败！");
+                        }
+                    }
+                };
+                xhr.open("post", "/newsInfo/doAdd", true);
+                xhr.send(formData);
+            }
+        </script>
+    </head>
+    <body>
+        <h2>添加新闻</h2>
+
+        <table border="1">
+            <form id="myForm">
+                <tr>
+                    <td>标题</td>
+                    <td><input type="text" name="title" id="title"></td>
+                </tr>
+                <tr>
+                    <td>新闻类型</td>
+                    <td><input type="text" name="typeId" id="typeId"></td>
+                </tr>
+                <tr>
+                    <td>简短描述</td>
+                    <td>
+                        <textarea name="shortDesc"  cols="20" rows="5"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>新闻内容</td>
+                    <td>
+                        <textarea name="content"  cols="20" rows="5"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>显示时间</td>
+                    <td><input type="text" name="showTime"></td>
+                </tr>
+                <tr>
+                    <td>发布人</td>
+                    <td><input type="text" name="pubUserId" id="pubUserId"></td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <input type="button" value="保存" onclick="add()">
+                    </td>
+                </tr>
+            </form>
+        </table>
+
+    </body>
+</html>

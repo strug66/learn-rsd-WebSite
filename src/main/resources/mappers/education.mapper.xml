@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.rsd.mapper.IEducationMapper">
+    <cache/>
+
+    <select id="queryList" resultType="com.rsd.bean.Education"> <!--flushCache="true" 关闭一级缓存-->
+        select * from bu_education;
+    </select>
+
+    <insert id="insert" parameterType="com.rsd.bean.Education">
+        insert into bu_education(id, name) VALUES(null,#{name});
+    </insert>
+</mapper>

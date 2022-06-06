@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>log4j列表2</title>
+        <script>
+            function changeTime(data) {
+                var d = new Date(data);
+                return d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate() + " " + d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
+            }
+
+        </script>
+        <script>
+            function loadTable() {
+                var iArray = null;
+                var xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState == 4 && xhr.status == 200) {
+                        var data = xhr.responseText;
+                        iArray = JSON.parse(data);
+                    }
+                }
+                xhr.open("get", "/log4j/list", false);  //关闭异步
+                xhr.send();
+
+                //表格
+                str = "<table border = '1' ;width='100%'>";
+                str += "<tr>";
+                str += "<th>序号</th>";
+                str += "<th>calzz</th>";
+                str += "<th>级别</th>";
+                str += "<th>内容</th>";
+                str += "<th>创建时间</th>";
+                str += "<th>操作</th>";
+                str += "</tr>";
+
+                iArray.forEach(function (obj, index) {
+                    str += "<tr>";
+                    str += "<td>" + (index + 1) + "</td>";
+                    str += "<td>" + obj.clazz + "</td>";
+                    str += "<td>" + obj.level + "</td>";
+                    str += "<td>" + obj.content + "</td>";
+                    str += "<td>" + changeTime(obj.createTime) + "</td>";
+                    str += "<td><a href='#'>修改</a><a href='#'>删除</a></td>";
+                    str += "</tr>";
+                });
+
+                str += "</table>"
+
+                var info = document.getElementById("info");
+                info.innerHTML = str;
+            }
+        </script>
+    </head>
+    <body onload="loadTable()">
+        <h2>log4j列表</h2>
+
+        <div id="info"></div>
+
+    </body>
+</html>

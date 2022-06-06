@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>学习formdata</title>
+        <script>
+            function add() {
+                var myForm = document.getElementById("myForm");
+                var formData = new FormData(myForm);
+
+                formData.forEach(function (value,key){
+                    alert(value+"——"+key);
+                });
+
+            }
+        </script>
+    </head>
+
+    <form id="myForm">
+        id:<input type="text" id="id" name="id">
+        名字：<input type="text" id="name" name="name">
+        <input type="button" value="保存" onclick="add()">
+
+    </form>
+    <body>
+
+    </body>
+</html>

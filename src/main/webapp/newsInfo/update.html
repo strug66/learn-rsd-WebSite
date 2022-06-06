@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>修改新闻信息</title>
+    <script>
+        function load() {
+            var str = window.location.search;//?id=6
+            var id = str.split("=")[1];
+            document.getElementById("id").value = id;
+            var title = document.getElementById("title");
+            var typeId = document.getElementById("typeId");
+            var shortDesc = document.getElementById("shortDesc");
+            var content = document.getElementById("content");
+            var showTime = document.getElementById("showTime");
+            var pubUserId = document.getElementById("pubUserId");
+
+            var newsInfo = null;
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    var data = xhr.responseText;
+                    newsInfo = JSON.parse(data);
+                }
+            };
+            xhr.open("post", "/newsInfo/toUpdatePage", false);
+
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded;charset=UTF-8');
+            xhr.send("id=" + id);
+
+            title.value = newsInfo.title;
+            typeId.value = newsInfo.typeId;
+            shortDesc.value = newsInfo.shortDesc;
+            content.value = newsInfo.content;
+            showTime.value = newsInfo.showTime;
+            pubUserId.value = newsInfo.pubUserId;
+        }
+
+        function update() {
+            var id = document.getElementById("id");
+            var myForm = document.getElementById("myForm");
+            var formData = new FormData(myForm);
+
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    var data = xhr.responseText;
+                    if (data == "true") {
+                        alert("修改成功！");
+                        window.location.href = "/newsInfo/list2.html";
+                    } else {
+                        alert("修改失败！");
+                        window.location.href = "/newsInfo/update.html?id=" + id.value;
+                    }
+                }
+            };
+            xhr.open("post", "/newsInfo/doUpdate", true);
+            xhr.send(formData);
+
+        }
+    </script>
+</head>
+<body onload="load()">
+    <h2>修改新闻信息</h2>
+    <form id="myForm">
+        <input type="hidden" name="id" id="id">
+        <table border="1">
+            <tr>
+                <td>标题</td>
+                <td><input type="text" name="title" id="title"></td>
+            </tr>
+            <tr>
+                <td>新闻类型</td>
+                <td><input type="text" name="typeId" id="typeId"></td>
+            </tr>
+            <tr>
+                <td>简短描述</td>
+                <td>
+                    <textarea name="shortDesc" id="shortDesc" cols="20" rows="5"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td>新闻内容</td>
+                <td>
+                    <textarea name="content" id="content" cols="20" rows="5"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td>显示时间</td>
+                <td><input type="text" name="showTime" id="showTime"></td>
+            </tr>
+            <tr>
+                <td>发布人</td>
+                <td><input type="text" name="pubUserId" id="pubUserId"></td>
+            </tr>
+
+            <tr>
+                <td colspan="2">
+                    <input type="button" value="修改" onclick="update()">
+                </td>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>

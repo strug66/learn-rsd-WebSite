@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>合并计算</title>
+        <script>
+            // bArray = [100,200,300];
+            // bArray.forEach(function (obj, index) {
+            //     alert(obj + "----" + index);
+            //
+            // });
+            function sum() {
+                var count1 = document.getElementById("count1");
+                // alert(count1.value);
+                var i = parseInt(count1.value);  //值 转int
+
+                var xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState == 4 && xhr.status == 200) {
+                        var data = xhr.responseText;
+                        var j = parseInt(data);  //转int
+                        i += j;
+                    }
+
+                }
+                xhr.open("get", "/test/ajax", false);  //true:开启异步  false:同步
+                xhr.send();
+
+                var info = document.getElementById("info");
+                info.innerText = i;  //赋值
+            }
+        </script>
+    </head>
+    <body>
+        <input type="number" id="count1">
+        <input type="button" value="合并计算" onclick="sum();">
+        <span id="info"></span>
+
+    </body>
+</html>

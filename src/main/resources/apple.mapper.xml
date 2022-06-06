@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--<mapper namespace="apple">-->
+<!--<select id="queryList" resultType="com.rsd.day4.Apple">-->
+
+<mapper namespace="com.rsd.mapper.IAppleMapper">
+    <select id="queryList" resultType="com.rsd.bean.Apple">
+        select * from bu_apple;
+    </select>
+    <select id="getById" parameterType="Integer" resultType="com.rsd.bean.Apple">
+        select * from bu_apple where id=#{id};
+    </select>
+    <select id="queryListByIdOrPrice" resultType="com.rsd.bean.Apple">
+        select * from bu_apple where id=#{id} or price=#{price1};
+    </select>
+    <insert id="insert" parameterType="com.rsd.bean.Apple">
+        insert into bu_apple values(null,#{name},#{price});
+    </insert>
+    <update id="update" parameterType="com.rsd.bean.Apple">
+        update bu_apple set name=#{name},price=#{price} where id=#{id};
+    </update>
+    <delete id="delete" parameterType="Integer">
+        delete from bu_apple where id=#{id};
+    </delete>
+</mapper>
