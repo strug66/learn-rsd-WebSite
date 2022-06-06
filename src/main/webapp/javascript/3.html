@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>js数据类型</title>
+    <script>
+        // var i = 0;
+        // var b = true;
+        // var s = "中国";
+        // var iArray = [15, "aaa", "bbb", false];
+        // alert(iArray[3]);
+        //
+        // var person = {"name": "小明", "password": "123456", "sex": "女"};
+        // alert(person.password);
+        //
+        // alert(911 + 7 + "ss");  //先运算918
+
+        function changeInfo() {
+            var info = document.getElementById("info");
+            alert(info.innerText);
+        }
+
+        function aaa() {
+            var showTime = document.getElementById("showTime");  //普通元素 innerText
+            var d = new Date();
+            showTime.innerText = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate() + " " +
+                d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
+        }
+
+
+
+
+    </script>
+</head>
+<body>
+    <input type="button" value="点击我" onclick="changeInfo()">
+    <div id="info">BBBBB</div>
+
+    <input type="button" value="显示当前时间" onclick="aaa()">
+    <sapn id="showTime"></sapn>
+</body>
+</html>

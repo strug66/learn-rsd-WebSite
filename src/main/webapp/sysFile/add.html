@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>新增文件上传</title>
+    <script>
+        function uploadFile() {
+            var myForm = document.getElementById("myForm");
+            var formData = new FormData(myForm);
+
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    if (xhr.responseText == "true") {
+                        alert("上传成功！");
+                        window.location.href = "/sysFile/list2.html";  //再跳转到list.html
+                    } else {
+                        alert("上传失败！");
+                    }
+                }
+            };
+            xhr.open("post", "/sysFile/doAdd2", true);
+            xhr.send(formData);
+        }
+    </script>
+</head>
+<body>
+    <form id="myForm" enctype="multipart/form-data">
+        <input type="file" name="file"/>
+        <input type="button" value="提交" onclick="uploadFile()">
+    </form>
+</body>
+</html>

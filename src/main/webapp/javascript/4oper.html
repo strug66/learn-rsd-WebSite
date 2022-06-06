@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>计算器</title>
+    <script>
+        var s = "5+7"
+        var t = window.eval(s);//判断是数字，会计算
+        // alert(s);
+        // alert(t);
+
+        function oper() {
+            var count1 = document.getElementById("count1");
+            var oper = document.getElementById("oper");
+            var count2 = document.getElementById("count2");
+
+            // alert(count1.value + oper.value + count2.value);  //值
+            // alert(typeof count2)  //类型 object
+
+            var value;
+            // if (oper.value == "+") {
+            //     value = parseFloat(count1.value) + parseFloat(count2.value);
+            // }
+            // if (oper.value == "-") {
+            //     value = count1.value - count2.value;
+            // }
+            // if (oper.value == "*") {
+            //     value = count1.value * count2.value;
+            // }
+            // if (oper.value == "/") {
+            //     value = count1.value / count2.value;
+            // }
+
+            value = eval(count1.value + oper.value + count2.value);
+            var result = document.getElementById("result");
+            result.value = value;
+        }
+
+        function ff(obj) {
+            // alert(obj.value);
+            var lastResult = document.getElementById("lastResult");
+            lastResult.value += obj.value;
+        }
+
+        function tt() {
+            var lastResult = document.getElementById("lastResult");
+            lastResult.value = eval(lastResult.value);
+        }
+
+        function cc() {
+            var lastResult = document.getElementById("lastResult");
+            lastResult.value = "";
+        }
+
+        function aaa() {
+            var showTime = document.getElementById("showTime");  //普通元素 innerText
+            var d = new Date();
+            showTime.innerText = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate() + " " +
+                d.getHours() + ":" + d.getUTCMinutes() + ":" + d.getUTCSeconds();
+        }
+
+
+    </script>
+</head>
+<body>
+
+    <input type="text" id="count1"/>
+    <select id="oper">
+        <option value="+">+</option>
+        <option value="-">-</option>
+        <option value="*">*</option>
+        <option value="/">/</option>
+    </select>
+    <input type="text" id="count2"/>
+
+    <input type="button" value="=" onclick="oper();"/>
+    <input type="text" id="result"/>
+    <br>
+    <h2>计算器</h2>
+    <table border="1" width="200px">
+        <tr>
+            <td colspan="4" style="height: 40px;text-align: center;">
+                <input id="lastResult" style="height:83%;width:95%;text-align: right;"/>
+            </td>
+        </tr>
+        <tr>
+            <td style="height: 40px;"><input type="button" value="7" style="width: 50px;height: 100%;"
+                                             onclick="ff(this)"/></td>
+            <td style="height: 40px;"><input type="button" value="8" style="width: 50px;height: 100%;"
+                                             onclick="ff(this)"/></td>
+            <td style="height: 40px;"><input type="button" value="9" style="width: 50px;height: 100%;"
+                                             onclick="ff(this)"/></td>
+            <td style="height: 40px;"><input type="button" value="/" style="width: 50px;height: 100%;"
+                                             onclick="ff(this)"/></td>
+        </tr>
+        <tr>
+            <td style="height: 40px;"><input type="button" value="4" style="width: 50px;height: 100%;"
+                                             onclick="ff(this)"/></td>
+            <td style="height: 40px;"><input type="button" value="5" style="width: 50px;height: 100%;"
+                                             onclick="ff(this)"/></td>
+            <td style="height: 40px;"><input type="button" value="6" style="width: 50px;height: 100%;"
+                                             onclick="ff(this)"/></td>
+            <td style="height: 40px;"><input type="button" value="*" style="width: 50px;height: 100%;"
+                                             onclick="ff(this)"/></td>
+        </tr>
+        <tr>
+            <td style="height: 40px;"><input type="button" value="1" style="width: 50px;height: 100%;"
+                                             onclick="ff(this)"/></td>
+            <td style="height: 40px;"><input type="button" value="2" style="width: 50px;height: 100%;"
+                                             onclick="ff(this)"/></td>
+            <td style="height: 40px;"><input type="button" value="3" style="width: 50px;height: 100%;"
+                                             onclick="ff(this)"/></td>
+            <td style="height: 40px;"><input type="button" value="-" style="width: 50px;height: 100%;"
+                                             onclick="ff(this)"/></td>
+        </tr>
+        <tr>
+            <td style="height: 40px;"><input type="button" value="0" style="width: 50px;height: 100%;"
+                                             onclick="ff(this)"/></td>
+            <td style="height: 40px;"><input type="button" value="+" style="width: 50px;height: 100%;"
+                                             onclick="ff(this)"/></td>
+            <td style="height: 40px;"><input type="button" value="AC" style="width: 50px;height: 100%;"
+                                             onclick="cc()"/></td>
+            <td style="height: 40px;"><input type="button" value="="
+                                             style="width: 50px;height: 100%;background-color: chocolate"
+                                             onclick="tt()"/></td>
+        </tr>
+
+    </table>
+    <br>
+    <input type="button" value="显示当前时间" onclick="aaa()">
+    <sapn id="showTime"></sapn>
+
+</body>
+</html>

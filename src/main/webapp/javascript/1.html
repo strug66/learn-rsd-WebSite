@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>我的第一个js</title>
+    <script type="text/javascript">
+
+        var i = 150;
+        alert(typeof i);
+        i = true;
+        alert(typeof i);
+
+        if (confirm("你确定删除吗？")) {
+            alert("删除！");
+        }
+
+        function showInfo1(s) {
+            alert(s)
+        }
+
+        function showInfo2(s) {
+            var ss = "---添加方法返回值----" + s;
+            return ss;
+        }
+
+        var s = showInfo2("AAA");
+        alert(s);
+
+    </script>
+
+</head>
+<body>
+    <input type="button" value="点击我" onclick="showInfo1('BBB')"/>
+
+</body>
+</html>

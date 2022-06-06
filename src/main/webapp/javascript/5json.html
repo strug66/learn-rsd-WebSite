@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+        <script>
+            function showInfo() {
+
+                var xhr;
+                if (window.XMLHttpRequest) {
+                    xhr = new XMLHttpRequest();
+                } else {
+                    xhr = new ActiveXObject("Microsoft.XMLHTTP");
+                }
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState == 4 && xhr.status == 200) {
+                        var data = xhr.responseText; //string类型
+                        var json = JSON.parse(data); //转为json
+
+                        var info = document.getElementById("info");
+                        info.innerText = json.loginName + json.password + json.sex;
+                    }
+
+                };
+
+                xhr.open("get", "/hello", true);
+                xhr.send();
+
+                // var data = '{"loginName": "小明", "password": "123456", "sex": "女"}';
+                // // alert(typeof data); //字符串
+                // // alert(data.loginName); //undefined
+                //
+                // var json = JSON.parse(data); //转为 json对象
+                //
+                // var info = document.getElementById("info");
+                // info.innerText = json.loginName + json.password + json.sex;
+            }
+        </script>
+    </head>
+    <body>
+        <input type="button" value="点击显示学生对象" onclick="showInfo()">
+        <div id="info"></div>
+    </body>
+</html>

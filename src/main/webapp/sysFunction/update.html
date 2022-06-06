@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>修改系统功能</title>
+        <script>
+            function form() {
+                var idInfo = document.getElementById("idInfo");
+                var nameInfo = document.getElementById("nameInfo");
+
+                var s = window.location.search;  //string
+                // var id = s.substring(4);
+                var id = s.split("=")[1];
+                idInfo.value = id; //隐藏修改的id表单
+
+                var xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState == 4 && xhr.status == 200) {
+                        var data = xhr.responseText; //string
+                        var json = JSON.parse(data);
+                        nameInfo.value = json.name; //回显
+                    }
+                }
+                xhr.open("post", "/sysFunction/toUpdatePage2", true);
+                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded;charset=UTF-8');
+                xhr.send("id=" + id);
+            }
+        </script>
+        <script>
+            function doUpdate() {
+                var idInfo = document.getElementById("idInfo");
+                var nameInfo = document.getElementById("nameInfo");
+                if (nameInfo.value == "") {
+                    alert("名字不能为空！");
+                    return;
+                }
+
+                var xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState == 4 && xhr.status == 200) {
+                        var data = xhr.responseText; //string
+                        if (data == "true") {
+                            alert("修改成功！");
+                            window.location.href = "/sysFunction/list.html";
+                        } else {
+                            alert("修改失败！");
+                        }
+                    }
+                };
+                xhr.open("post", "/sysFunction/doUpdate2", true);
+                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded;charset=UTF-8');
+                xhr.send("name=" + nameInfo.value + "&id=" + idInfo.value);
+
+            }
+        </script>
+    </head>
+
+    <body onload="form()">
+        <input type="hidden" id="idInfo" name="idInfo"/>
+        功能名字：<input type="text" id="nameInfo" name="nameInfo"/>
+        <input type="button" value="修改" onclick="doUpdate()">
+    </body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>我的第一个js</title>
+    <script type="text/javascript">
+
+        function toBaiDuPage() {
+            window.location.href = "https://www.baidu.com";
+        }
+
+        function showInfos() {
+
+            var dd = document.getElementById("login_name");
+            if (dd.value == "") {
+                alert("登录名不能为空！")
+            } else {
+                alert(dd.value);
+            }
+
+            var aa = document.getElementById("aa");
+            alert(aa.innerHTML); //不经过处理
+            alert(aa.innerText);  //只是文本
+
+            //table/ul
+            var t1 = document.getElementById("t1");
+            alert(t1.innerHTML);
+
+            //button  表单元素
+            var but = document.getElementById("but");
+            alert(but.value);
+            alert(but.type);
+            alert(but.onclick);
+
+
+        }
+
+
+    </script>
+
+</head>
+<body>
+    <input type="text" name="login_name" id="login_name">
+
+    <div id="aa"><span style="color: red">你好中国</span></div>
+    <table>
+        <td id="t1">足球</td>
+        <td id="t2">篮球</td>
+    </table>
+
+
+    <input id="but" type="button" value="点击我" onclick="showInfos()"/>
+
+
+</body>
+</html>

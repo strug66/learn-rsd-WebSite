@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>文件上传列表3</title>
+        <script>
+            function getTime(time) {
+                var d = new Date(time); //月+1  天数date
+                return d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate() + " " + d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
+            }
+
+            function toAddPage() {
+                window.location.href = "/sysFile/add.html";
+            }
+
+            function toUpdatePage(id) {
+                window.location.href = "/sysFile/update.html?id=" + id;  //携带修改的id 跳转到update.html
+            }
+
+            function deDelete(id) {
+                if (confirm("您确定删除吗？")) {
+                    var xhr = new XMLHttpRequest();
+                    xhr.onreadystatechange = function () {
+                        if (xhr.readyState == 4 && xhr.status == 200) {
+                            alert(xhr.responseText);
+                            if (xhr.responseText == "true") {
+                                alert("删除成功！");
+                                window.location.href = "/sysFile/list2.html";
+                            } else {
+                                alert("删除失败！");
+                            }
+                        }
+                    }
+                    xhr.open("post", "/sysFile/doDelete2", true);
+
+                    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded;charset=UTF-8');
+                    xhr.send("id=" + id);
+                }
+            }
+
+            function download(id) {
+                alert(id);
+                window.location.href = "/sysFile/download?id=" + id;
+            }
+
+            function form() {
+                var iArray = null; //提前定义列表
+                var xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState == 4 & xhr.status == 200) {
+                        var data = xhr.responseText;
+                        alert(data);
+                        iArray = JSON.parse(data);
+                    }
+                };
+                xhr.open("get", "/sysFile/list2", false); //关闭异步
+                xhr.send();
+
+                alert(iArray);
+                var str = "<table border='1' width='100%'>"
+                str += "<tr>";
+                str += "<td>序号</td>";
+                str += "<td>文件名称</td>";
+                str += "<td>路径</td>";
+                str += "<td>文件大小</td>";
+                str += "<td>上传时间</td>";
+                str += "<td>操作</td>";
+                str += "</tr>";
+
+                iArray.forEach(function (obj, index) {
+                    str += "<tr>";
+                    str += "<td>" + (index + 1) + "</td>";
+                    str += "<td>" + obj.name + "</td>";
+                    str += "<td>" + obj.path + "</td>";
+                    str += "<td>" + obj.fileSize + "</td>";
+                    str += "<td>" + getTime(obj.createTime) + "</td>";
+                    str += "<td><a href='javaScript:download(" + obj.id + ")'>下载</a><a href='javaScript:toUpdatePage(" + obj.id + ")'>修改</a><a href='javaScript:deDelete(" + obj.id + ")'>删除</a></td>";
+                    str += "</tr>";
+                });
+                str += "</table>";
+
+                var list = document.getElementById("list");
+                list.innerHTML = str;
+            }
+        </script>
+    </head>
+
+    <body onload="form()">
+        <h2>文件上传列表</h2>
+        <a href="javascript:toAddPage()">添加</a>
+        <div id="list"></div>
+    </body>
+</html>

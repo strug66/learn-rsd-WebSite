@@ -1,0 +1,44 @@
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+        <title>正则表达式</title>
+    </head>
+    <script>
+        function showInfo() {
+            // var reg = /\d{6}/;
+            // var b = reg.test("123456");
+
+            var ss = document.getElementById("ss");
+            var b = /^\d{6}$/.test(ss.value);
+
+            if (ss.value.length != 6) {
+                alert("长度必须为6！");
+                return;
+            } else if (!b) {
+                alert("请输入6个数字！");
+                return;
+            }
+            alert("验证成功，执行保存！");
+
+        }
+
+        function showInfo2() {
+            var reg = new RegExp("[1-9]\\d{5}");
+            var b = reg.test(document.getElementById("ss2").value);
+            if (!b) {
+                alert("请输入正确邮编！");
+                return;
+            }
+            alert("正确");
+        }
+
+    </script>
+    <body>
+        <input type="text" id="ss"/>
+        <input type="button" value="正则验证" onclick="showInfo()"/>
+        <input type="text" id="ss2"/>
+        <input type="button" value="邮编验证" onclick="showInfo2()"/>
+
+
+    </body>
+</html>
